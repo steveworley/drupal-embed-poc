@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import { Index } from "elasticlunr"
 
+import styles from './discovery.module.css'
+
 export default class Discovery extends Component {
   constructor(props) {
     super(props)
@@ -11,13 +13,7 @@ export default class Discovery extends Component {
   }
 
   componentDidMount() {
-    console.log('Mounted.');
     this.index = this.getOrCreateIndex()
-    this.setState({
-      results: this.index.search('**********').map(({ref}) => this.index.documentStore.getDoc(ref))
-    })
-
-    window.y = this.index
   }
 
   getOrCreateIndex = () => this.index
@@ -26,7 +22,11 @@ export default class Discovery extends Component {
       Index.load(this.props.searchIndex)
 
   select = item => {
-    // window.postMessage(item)
+    // This should render a react component.
+    const embed = "<div class='content-embed'><h1>" + item.title + "</h1></div>";
+    if (window.parent) {
+      window.parent.postMessage({ embed }, '*')
+    }
     alert(`Choose to embed ${item.title}`)
   }
 
@@ -58,18 +58,21 @@ export default class Discovery extends Component {
   render() {
 
     const Results = this.state.results.length === 0 ? (
-      <div>
-        <p>Please refine your search for content.</p>
-      </div>
+      <p>Please refine your search for content.</p>
     ) : this.renderResults()
 
     return (
-      <div>
-        <div>
+      <div className={styles.discoveryContainer}>
+        <div className={styles.discoveryTitle}>
+          Select content to embed
+        </div>
+        <div className={styles.discoveryForm}>
           <label>Keywords</label>
           <input type="text" placeholder="search" onChange={this.search} />
         </div>
-        { Results }
+        <div className={styles.discoveryContent}>
+          { Results }
+        </div>
       </div>
     )
   }

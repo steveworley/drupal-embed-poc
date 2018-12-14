@@ -1,0 +1,11 @@
+<iframe src="http://localhost:8000/discovery" border="0" frameborder="0" width="1000px" height="500px" style="border: 1px solid grey; box-shadow: 0 0 15px rgba(0,0,0,.5);"></iframe>
+<div style="margin-top: 2em">
+  <p><strong>Body:</strong></p>
+  <textarea id="embed-code" style="width: 1000px; height: 300px;"></textarea>
+</div>
+<script type="text/javascript">
+  window.addEventListener('message', receiveMessage, false)
+  function receiveMessage(event) {
+    document.getElementById('embed-code').value = event.data.embed;
+  }
+</script>
