@@ -20,6 +20,18 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    {
+      resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
+      options: {
+        fields: [`title`, 'tags'],
+        resolvers: {
+          node__blog: {
+            title: node => node.title,
+            tags: node => node.relationships.field_tags
+          },
+        },
+      },
+    },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
