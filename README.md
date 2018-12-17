@@ -13,7 +13,7 @@ npm install
 gatsby develop
 ```
 
-Then point your browser at http://localhost:8000/node-list-block.
+Then point your browser at http://localhost:8000/discovery
 
 # Thanks
 
